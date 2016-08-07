@@ -2,7 +2,7 @@ from __future__ import print_function
 
 import numpy as np
 import cv2
-from data import image_cols, image_rows
+from data_class import image_cols, image_rows
 
 
 def prep(img):
@@ -13,7 +13,7 @@ def prep(img):
 
 
 def pre_train():
-    from data import load_test_data
+    from data_class import load_test_data
     imgs_test, imgs_id_test = load_test_data()
     imgs_test = np.load('imgs_test.npy')
     imgs_mask_test_class = np.load('imgs_mask_test_class.npy')
@@ -28,7 +28,7 @@ def pre_train():
     rles = []
     for i in range(total):
         img = imgs_test[i, 0]
-        if imgs_mask_test_class[i][0] == 1:
+        if imgs_mask_test_class[i][0] > imgs_mask_test_class[i][1]:
             rle = img
             ids.append(imgs_id_test[i])
             rles.append(rle)
@@ -45,8 +45,7 @@ def pre_train():
         imgs_id[i] = ids[i]
     np.save('imgs_test_not_empty.npy', imgs_mask)
     np.save('imgs_id_test_not_empty.npy', imgs_id)
-    print(imgs_mask)
-
+    print(len(imgs_mask))
 
 if __name__ == '__main__':
     pre_train()

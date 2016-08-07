@@ -2,7 +2,7 @@ from __future__ import print_function
 
 import numpy as np
 import cv2
-from data import image_cols, image_rows
+from data_class import image_cols, image_rows
 
 
 def prep(img):
@@ -18,7 +18,7 @@ def run_length_enc(label):
     y = np.where(x > 0)[0]
     if len(y) < 10:  # consider as empty
         return ''
-    z = np.where(np.diff(y) > 1)[0]
+    z = np.where(np.diff(y) > 10)[0]
     start = np.insert(y[z+1], 0, y[0])
     end = np.append(y[z], y[-1])
     length = end - start
@@ -28,7 +28,7 @@ def run_length_enc(label):
 
 
 def submission():
-    from data import load_test_data
+    from data_class import load_test_data
     imgs_test, imgs_id_test = load_test_data()
     imgs_test = np.load('imgs_mask_test_not_empty.npy')
     imgs_mask_test_class = np.load('imgs_mask_test_class.npy')
@@ -47,7 +47,7 @@ def submission():
     k = 0
     for i in range(total):
 
-        if imgs_mask_test_class[i][0] == 0:
+        if imgs_mask_test_class[i][0] < imgs_mask_test_class[i][1]:
             rle = ''
         else:
             img = imgs_test[k, 0]
