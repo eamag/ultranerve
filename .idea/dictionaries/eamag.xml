@@ -5,6 +5,7 @@
       <w>cval</w>
       <w>datagen</w>
       <w>keras</w>
+      <w>resnet</w>
       <w>sched</w>
     </words>
   </dictionary>

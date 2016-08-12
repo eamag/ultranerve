@@ -18,7 +18,7 @@ def run_length_enc(label):
     y = np.where(x > 0)[0]
     if len(y) < 10:  # consider as empty
         return ''
-    z = np.where(np.diff(y) > 10)[0]
+    z = np.where(np.diff(y) > 5)[0]
     start = np.insert(y[z+1], 0, y[0])
     end = np.append(y[z], y[-1])
     length = end - start
