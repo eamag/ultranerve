@@ -1,3 +1,5 @@
+# convert predicted class data for u-net
+
 from __future__ import print_function
 
 import numpy as np

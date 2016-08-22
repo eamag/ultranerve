@@ -114,21 +114,21 @@ def train_and_predict():
     model_checkpoint = ModelCheckpoint('unet_not_empty.hdf5', monitor='loss', save_best_only=True,
                                        save_weights_only=True)
 
+    print('-'*30)
+    print('Loading saved weights...')
+    print('-'*30)
+    model.load_weights('unet_not_empty.hdf5')
+
     # print('-'*30)
-    # print('Loading saved weights...')
+    # print('Fitting model...')
     # print('-'*30)
-    # model.load_weights('unet_not_empty.hdf5')
-    #
-    # # print('-'*30)
-    # # print('Fitting model...')
-    # # print('-'*30)
-    # # model.fit(imgs_train, imgs_mask_train, batch_size=10, nb_epoch=20, verbose=1, shuffle=True,
-    # #           callbacks=[model_checkpoint], validation_split=0.1)
-    #
-    # datagen = ImageDataGenerator(rotation_range=5, width_shift_range=0.01, height_shift_range=0.01, zoom_range=0.1,
-    #                              horizontal_flip=True, vertical_flip=True)
-    # model.fit_generator(datagen.flow(imgs_train, imgs_mask_train, batch_size=8, shuffle=True),
-    #                     samples_per_epoch=len(imgs_train) * 2, nb_epoch=1, verbose=1, callbacks=[model_checkpoint])
+    # model.fit(imgs_train, imgs_mask_train, batch_size=10, nb_epoch=20, verbose=1, shuffle=True,
+    #           callbacks=[model_checkpoint], validation_split=0.1)
+
+    datagen = ImageDataGenerator(rotation_range=5, width_shift_range=0.01, height_shift_range=0.01, zoom_range=0.1,
+                                 horizontal_flip=True, vertical_flip=True)
+    model.fit_generator(datagen.flow(imgs_train, imgs_mask_train, batch_size=8, shuffle=True),
+                        samples_per_epoch=len(imgs_train) * 2, nb_epoch=1, verbose=1, callbacks=[model_checkpoint])
 
     print('-'*30)
     print('Loading and preprocessing test data...')

@@ -1,12 +1,19 @@
 <component name="ProjectDictionaryState">
   <dictionary name="eamag">
     <words>
+      <w>coef</w>
+      <w>conv</w>
       <w>crossentropy</w>
       <w>cval</w>
       <w>datagen</w>
+      <w>imgs</w>
       <w>keras</w>
+      <w>preprocess</w>
+      <w>preprocessing</w>
       <w>resnet</w>
       <w>sched</w>
+      <w>unet</w>
+      <w>upsampling</w>
     </words>
   </dictionary>
 </component>

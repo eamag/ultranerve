@@ -1,3 +1,5 @@
+# preprocessing and creating data
+
 from __future__ import print_function
 
 import numpy as np
@@ -86,8 +88,6 @@ def create_train_data():
     train_len = len(images) / 2
     total = train_len * 3
     not_empty = 2323*3  # count that for you, imgs that have masks
-    # generator = ImageDataGenerator(rotation_range=5, height_shift_range=0.01, width_shift_range=0.01,
-    #                                horizontal_flip=True, vertical_flip=True, zoom_range=0.1)
 
     imgs = np.ndarray((not_empty, 1, image_rows, image_cols), dtype=np.uint8)
     imgs_class = np.ndarray((total, 1, image_rows, image_cols), dtype=np.uint8)

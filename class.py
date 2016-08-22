@@ -1,3 +1,6 @@
+# first network for prediction of nerve's existence
+# usual u-net without upsampling part (memory reasons)
+
 from __future__ import print_function
 from __future__ import absolute_import
 
@@ -12,7 +15,7 @@ from keras.preprocessing.image import ImageDataGenerator
 
 from data_class import load_test_data
 
-img_rows = 112
+img_rows = 112  # preprocessed images
 img_cols = 144
 
 smooth = 1.
@@ -81,7 +84,7 @@ def preprocess(imgs):
 
 def train_and_predict():
     print('-' * 30)
-    print('Loading and preprocessing train data...')
+    print('Loading train data...')
     print('-' * 30)
     imgs_train = np.load('imgs_train_class.npy')
     imgs_mask_train = np.load('imgs_mask_train_class.npy')
@@ -100,6 +103,7 @@ def train_and_predict():
     print('-' * 30)
     model = get_unet()
     model_checkpoint = ModelCheckpoint('unet_class.hdf5', monitor='loss', save_best_only=True, save_weights_only=True)
+    #  save_weights_only=True for newest keras version
 
     print('-' * 30)
     print('Loading saved weights...')

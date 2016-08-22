@@ -1,7 +1,7 @@
 from __future__ import print_function
 from __future__ import absolute_import
 
-import cv2
+# import cv2
 import numpy as np
 from keras.models import Model
 from keras.layers import Input, Convolution2D, Dense, Flatten, advanced_activations
@@ -10,7 +10,7 @@ from keras.optimizers import Adam
 from keras.callbacks import ModelCheckpoint
 from keras.preprocessing.image import ImageDataGenerator
 
-from data_class import load_test_data
+# from data_class import load_test_data
 
 img_rows = 224
 img_cols = 224
@@ -116,7 +116,7 @@ def _residual_block(block_function, nb_filters, repetations, is_first_layer=Fals
 # http://arxiv.org/pdf/1512.03385v1.pdf
 # 50 Layer resnet
 def resnet():
-    input = Input(shape=(1, 224, 224))
+    input = Input((1, 224, 224))
 
     conv1 = _conv_bn_relu(nb_filter=64, nb_row=7, nb_col=7, subsample=(2, 2))(input)
     pool1 = MaxPooling2D(pool_size=(3, 3), strides=(2, 2), border_mode="same")(conv1)
@@ -166,10 +166,10 @@ def train_and_predict():
     print('Creating and compiling model...')
     print('-' * 30)
     model = resnet()
-    model_checkpoint = ModelCheckpoint('resnet.hdf5', monitor='loss', save_best_only=True, save_weights_only=True)
+    model_checkpoint = ModelCheckpoint('resnet.hdf5', monitor='loss', save_best_only=True)
 
     # print('-' * 30)
-    # print('Loading saved weights...')
+    # print('Loading saved weights...') , save_weights_only=True
     # print('-' * 30)
     # model.load_weights('unet_class.hdf5')
 
@@ -181,29 +181,29 @@ def train_and_predict():
     # model.fit_generator(datagen.flow(imgs_train, imgs_mask_train, batch_size=24, shuffle=True),
     #                     samples_per_epoch=len(imgs_train) * 2, nb_epoch=20, verbose=1, callbacks=[model_checkpoint])
 
-    model.fit(imgs_train, imgs_mask_train, batch_size=24, nb_epoch=1, verbose=1, shuffle=True,
+    model.fit(imgs_train, imgs_mask_train, batch_size=8, nb_epoch=1, verbose=1, shuffle=True,
               callbacks=[model_checkpoint], validation_split=0.5)
 
-    print('-' * 30)
-    print('Loading and preprocessing test data...')
-    print('-' * 30)
-    imgs_test, imgs_id_test = load_test_data()
-    imgs_test = preprocess(imgs_test)
-
-    imgs_test = imgs_test.astype('float32')
-    imgs_test -= mean
-    imgs_test /= std
-
-    print('-' * 30)
-    print('Loading model...')
-    print('-' * 30)
-    model.load_weights('resnet.hdf5')
-
-    print('-' * 30)
-    print('Predicting masks on test data...')
-    print('-' * 30)
-    imgs_mask_test = model.predict(imgs_test, verbose=1)
-    np.save('imgs_mask_test_class.npy', imgs_mask_test)
+    # print('-' * 30)
+    # print('Loading and preprocessing test data...')
+    # print('-' * 30)
+    # imgs_test, imgs_id_test = load_test_data()
+    # imgs_test = preprocess(imgs_test)
+    #
+    # imgs_test = imgs_test.astype('float32')
+    # imgs_test -= mean
+    # imgs_test /= std
+    #
+    # print('-' * 30)
+    # print('Loading model...')
+    # print('-' * 30)
+    # model.load_weights('resnet.hdf5')
+    #
+    # print('-' * 30)
+    # print('Predicting masks on test data...')
+    # print('-' * 30)
+    # imgs_mask_test = model.predict(imgs_test, verbose=1)
+    # np.save('imgs_mask_test_class.npy', imgs_mask_test)
 
 
 if __name__ == '__main__':
